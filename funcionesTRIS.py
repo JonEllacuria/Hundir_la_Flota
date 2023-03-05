@@ -4,6 +4,12 @@ import time
 
 
 #1
+'''Función Iniciar Juego:
+	- Saluda al jugador y explica el funcionamiento del juego
+	- Pregunta el nombre
+	- Pregunta el tamaño de tablero
+	- Output (nombre_usuario, tamaño_tablero, diccionario de barcos)'''
+ 
 def iniciar_juego():
     print("¡Bienvenido al juego de Hundir la Flota!")
     time.sleep(2)
@@ -70,7 +76,15 @@ def iniciar_juego():
 #ocup_eslora1,ocup_eslora2,ocup_eslora3,ocup_eslora4=eslora1*1,eslora2*2,eslora3*3,eslora4*4
 
 #2
-
+'''Función Colocar Barcos y Tablero Máquina:
+	- Recibe los inputs de la función previa y crea 2 tableros aleatorios (uno para el jugador y otro 
+	para la máquina)
+	- Depende del tamaño del tablero, coloca unos barcos u otros, pero la lógica es la misma.
+	- Los barcos los coloca de manera aleatoria generando 3 valores random (coord_x,coord_y y orientación)
+	- Muchas condiciones para que los barcos no se salgan del tablero ni se solapen ni estén "cerca" unos de
+	de otros (un espacio de distancia, incluso de manera horizontal)
+	- Output (tablero_usuario y tablero_maquina). Obviamente el tablero_maquina no lo visualiza el usuario.'''
+ 
 def colocar_barcos(name,tamaño_tablero,tablero_copia,dict_barcos,ocup_eslora4,ocup_eslora3,ocup_eslora2,ocup_eslora1):
     if tamaño_tablero==2:
         for i in dict_barcos:
@@ -1053,6 +1067,7 @@ def colocar_barcos(name,tamaño_tablero,tablero_copia,dict_barcos,ocup_eslora4,o
     return tablero_copia
 
 #3
+
 #tablero_maquina=tablero.copy()
 def crear_tablero_maquina(tamaño_tablero,tablero_maquina,dict_barcos,ocup_eslora4,ocup_eslora3,ocup_eslora2,ocup_eslora1):
     if tamaño_tablero==2:
@@ -2026,16 +2041,20 @@ def crear_tablero_maquina(tamaño_tablero,tablero_maquina,dict_barcos,ocup_eslor
                         continue
                     else:
                         tablero_maquina[x_user,y_user]="O"
-    
-            
-                            
-            
-        
-              
+     
     #print("--Tablero de la máquina--")
     #print(tablero_maquina)
     return tablero_maquina
 #4
+'''Función Disparo Usuario:
+	- Recibe el input del usuario (coord_x y coord_y) para orientar el disparo.
+	- Si metes una coordenada fuera del rango, te obliga a repetir
+	- Si el disparo:
+		*impacta en un barco: Se sustituye la "O" por "X" y te mantiene en el bucle para que dispares otra vez.
+		*impacta en el agua: Se sustituye el " " por "_" y te saca del bucle pasando el turno a la máquina.
+		*impacta en una celda impactada previamente: Detecta que hay "X" o "_" y te manda repetir tirada.
+	- Después de cada tirada, imprime tanto el tablero_usuario como el tablero_espejo.'''
+ 
 def disparo_usuario(tamaño_tablero,tablero_copia,tablero_maquina,name):
     while True:
         if tamaño_tablero==2:
@@ -2106,7 +2125,14 @@ def disparo_usuario(tamaño_tablero,tablero_copia,tablero_maquina,name):
             break
     return tablero_copia,tablero_maquina
     
-#5        
+#5     
+'''Función Disparo Máquina:
+	- Genera aleatoriamente una tirada (coord_x, coord_y) y dispara (dependiendo del tamaño del tablero, ajusta
+	el límite)
+	- Prácticamente lo mismo que Disparo Usuario
+	- Tablero_espejo es un reflejo del Tablero_máquina donde se ven las tiradas anteriores pero no la posición
+	de los barcos.'''   
+ 
 def disparo_maquina(tamaño_tablero,tablero_copia,tablero_maquina,name):
     while True:
         while True:

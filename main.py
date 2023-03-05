@@ -2,7 +2,7 @@ import numpy as np
 #from variables import *
 #from funcionesBIS import *
 from funcionesTRIS import *
-from clases import *
+#from clases import *
 import time
 
 dict_barcos,name,tablero,tamaño_tablero=iniciar_juego()
@@ -16,6 +16,10 @@ time.sleep(3)
 print("\n")
 tablero_maquina=crear_tablero_maquina(tamaño_tablero,tablero_maquina,dict_barcos,ocup_eslora4,ocup_eslora3,ocup_eslora2,ocup_eslora1)
 
+'''El bucle while del main te mantiene dentro mientras ambos tableros tengan barcos "vivos". 
+En el momento en que algún tablero pierde todos sus barcos, termina la partida y lanza el 
+mensaje de "Has ganado" o "Has perdido".
+'''
 while "O" in tablero_copia and "O" in tablero_maquina:
     tablero_copia,tablero_maquina=disparo_usuario(tamaño_tablero,tablero_copia,tablero_maquina,name)
     time.sleep(3)

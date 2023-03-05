@@ -1,0 +1,62 @@
+3 tamaños de tablero. Cada uno con un número de barcos predefinido
+tablero 1 ----> 5x5 (4 barcos de eslora 1)
+tablero 2 ----> 10x10 (4 barcos de eslora 1, 3 de eslora 2, 2 de eslora 3, 1 de eslora 4)
+tablero 3 ----> 15x15 (8 barcos de eslora 1, 6 de eslora 2, 4 de eslora 3, 2 de eslora 4)
+
+Al principio el juego preguntaba al jugador por el número de barcos de cada tamaño que quería incluir en la partida,
+pero vimos que era fácil que no cupieran los barcos y se hacía pesado.
+
+En un principio no habíamos incluido las diagonales, para dejar más espacio a los barcos. Pero después de las
+indicaciones de Miguel, lo incluímos.
+Eso nos llevó a modificar también el orden de colocar los barquitos. Antes empezábamos por los de 1, después los 
+de 2, 3 y 4. Pero finalmente empieza por los grandes.
+
+Después de muchos errores y problemas con el kernel, la función de crear el tablero (tanto el de jugador como el de
+la máquina, que son iguales) no falla. Hemos probado esta función más de 500 veces.
+
+El script de "variables" y "clases" no los hemos usado realmente. Realmente, tal y como lo tenemos estructurado,
+En "variables" sólo podríamos haber incluído la línea 9 del main.
+En "clases" nada porque la clase "Tablero" no la hemos incluído en el código final. Intentamos integrar la "clase"
+"display" que vimos en clase para mostrar los 2 tableros simultáneamente, pero sin éxito.
+
+El main es muy sencillo. Las 4 funciones y poco más
+
+	Función Iniciar Juego:
+	- Saluda al jugador y explica el funcionamiento del juego
+	- Pregunta el nombre
+	- Pregunta el tamaño de tablero
+	- Output (nombre_usuario, tamaño_tablero, diccionario de barcos)
+
+	Función Colocar Barcos y Tablero Máquina:
+	- Recibe los inputs de la función previa y crea 2 tableros aleatorios (uno para el jugador y otro 
+	para la máquina)
+	- Depende del tamaño del tablero, coloca unos barcos u otros, pero la lógica es la misma.
+	- Los barcos los coloca de manera aleatoria generando 3 valores random (coord_x,coord_y y orientación)
+	- Muchas condiciones para que los barcos no se salgan del tablero ni se solapen ni estén "cerca" unos de
+	de otros (un espacio de distancia, incluso de manera horizontal)
+	- Output (tablero_usuario y tablero_maquina). Obviamente el tablero_maquina no lo visualiza el usuario.
+
+	Función Disparo Usuario:
+	- Recibe el input del usuario (coord_x y coord_y) para orientar el disparo.
+	- Si metes una coordenada fuera del rango, te obliga a repetir
+	- Si el disparo:
+		*impacta en un barco: Se sustituye la "O" por "X" y te mantiene en el bucle para que dispares otra vez.
+		*impacta en el agua: Se sustituye el " " por "_" y te saca del bucle pasando el turno a la máquina.
+		*impacta en una celda impactada previamente: Detecta que hay "X" o "_" y te manda repetir tirada.
+	- Después de cada tirada, imprime tanto el tablero_usuario como el tablero_espejo.
+
+	Función Disparo Máquina:
+	- Genera aleatoriamente una tirada (coord_x, coord_y) y dispara (dependiendo del tamaño del tablero, ajusta
+	el límite)
+	- Prácticamente lo mismo que Disparo Usuario
+	- Tablero_espejo es un reflejo del Tablero_máquina donde se ven las tiradas anteriores pero no la posición
+	de los barcos.
+
+	El bucle while del main te mantiene dentro mientras ambos tableros tengan barcos "vivos". En el momento en
+que algún tablero pierde todos sus barcos, termina la partida y lanza el mensaje de "Has ganado" o "Has perdido".
+
+Cosas a incluir en el futuro: 
+*Que la máquina dispare "cerca" de un disparo acertado.
+*Niveles de dificultad: Que la máquina dispare varias veces y se quede con las "mejores" o "peores"
+ 
+
